@@ -14,7 +14,7 @@ class Pokemon
       self.update
     else
       sql = <<-SQL
-        INSERT INTO pokemon (name, type, id)
+        INSERT INTO pokemon (name, type)
         VALUES (?, ?)
         SQL
       
