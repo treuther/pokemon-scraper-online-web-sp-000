@@ -2,6 +2,7 @@ class Pokemon
   
   attr_accessor :id, :name, :type, :db
   
+  # initialized with keyword arguments, id, name, type and db
   def initialize(id:, name:, type:, db:)
     @name = name
     @type = type
@@ -9,24 +10,19 @@ class Pokemon
     @db = db
   end
   
-#   def self.save(name, type)
-#     if self.id
-#       self.update
-#     else
-#       sql = <<-SQL
-#         INSERT INTO pokemon (name, type)
-#         VALUES (?, ?)
-#         SQL
-      
-#       DB[:conn].execute(sql, self.name, self.type, self.id)
-#       @id = DB[:conn].execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
-#     end
-#   end
+  # saves an instance of a pokemon with the correct id
+  def self.save(name, type, db)
+    db.execute("INSERT INTO pokemon (name, type) VALUES (?, ?)", name, type)
+  end
   
-#   def update
-#     sql = "UPDATE pokemon SET name = ?, type = ?, WHERE id = ?"
-    
-#     DB[:conn].execute(sql, self.name, self.type, self.id)
-#   end
+  # find a pokemon from the database by their id number and returns a new Pokemon object
+  def self.find(num)
+    pokemon = db.execute("SELECT * FROM pokemon WHERE id = ?", [num])
+    new_pokemon = self.new(pokemon)
+    new_pokemon.id = pokemon[0][0]
+    new_pokemon.name = pokemon[0][1]
+    new_pokemon.type = pokemon[0][2]
+    new_pokemon
+  end
   
 end
