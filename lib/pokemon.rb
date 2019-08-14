@@ -22,9 +22,6 @@ class Pokemon
     pokemon = db.execute("SELECT * FROM pokemon WHERE id = ?", num).flatten
     
     new_pokemon = self.new(id: pokemon[0], name: pokemon[1], type: pokemon[2])
-    new_pokemon.id = pokemon[0]
-    new_pokemon.name = pokemon[1]
-    new_pokemon.type = pokemon[2]
     new_pokemon
   end
   
